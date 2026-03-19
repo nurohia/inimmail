@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model RedeemCode {
+  code          String         @id
+  durationHours Int
+  isUsed        Boolean        @default(false)
+  usedAt        DateTime?
+  lastBoundEmail String?
+  createdAt     DateTime       @default(now())
+  activeSession ActiveSession?
+}
+
+model ActiveSession {
+  sessionToken         String     @id
+  redeemCode           String     @unique
+  emailAddress         String
+  upstreamJwt          String
+  upstreamAddressId    String?
+  expiresAt            DateTime?
+  upstreamDeletedAt    DateTime?
+  upstreamDeleteError  String?
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  redeemCodeRecord     RedeemCode @relation(fields: [redeemCode], references: [code], onDelete: Cascade)
+}
+
+model DomainConfig {
+  domain       String   @id
+  isEnabled    Boolean  @default(true)
+  isAvailable  Boolean  @default(true)
+  source       String?
+  lastSeenAt   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

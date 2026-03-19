@@ -1,0 +1,28 @@
+{
+  "name": "temp-mail-gateway-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "db:push": "npx prisma db push",
+    "db:init": "node scripts/init-db.js",
+    "db:seed:test": "node scripts/seed-test-code.js",
+    "gen:secrets": "node scripts/generate-secrets.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Billing-aware gateway for cloudflare_temp_email",
+  "dependencies": {
+    "@prisma/adapter-better-sqlite3": "^7.5.0",
+    "@prisma/client": "^7.5.0",
+    "axios": "^1.13.6",
+    "better-sqlite3": "^12.8.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "prisma": "^7.5.0"
+  }
+}
